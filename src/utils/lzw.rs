@@ -206,7 +206,7 @@ impl EncodingDict {
 
     fn reset(&mut self) {
         self.table.clear();
-        for i in range(0, (1u16 << self.min_size as usize)) {
+        for i in 0..(1u16 << self.min_size as usize) {
             self.push_node(Node::new(i as u8));
         }
     }
