@@ -562,7 +562,7 @@ impl<R:Read> IDATReader<R> {
     }
 }
 
-impl<R: Read> Reader for IDATReader<R> {
+impl<R: Read> Read for IDATReader<R> {
     fn read(&mut self, buf: &mut [u8]) -> io::Result<usize> {
         if self.eof {
             return Ok(0)

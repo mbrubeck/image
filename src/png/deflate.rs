@@ -260,7 +260,7 @@ impl<R: Read> Inflater<R> {
     }
 }
 
-impl<R: Read> Reader for Inflater<R> {
+impl<R: Read> Read for Inflater<R> {
     fn read(&mut self, buf: &mut [u8]) -> io::Result<usize> {
         if self.pos as usize == self.buf.len() {
             if self.finished {
