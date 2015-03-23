@@ -271,10 +271,10 @@ where Container: Deref<Target=[u8]> + DerefMut {
 
     /// Writes the image as a true color image by splitting the colors
     /// over several frames
-    fn write_true_color<W: Writer>(&mut self,
-                                   w: &mut W,
-                                   hist: Vec<(Rgba<u8>, usize)>,
-                                   transparent: Option<usize>) -> io::Result<()>
+    fn write_true_color<W: Write>(&mut self,
+                                  w: &mut W,
+                                  hist: Vec<(Rgba<u8>, usize)>,
+                                  transparent: Option<usize>) -> io::Result<()>
     {
         let mut hist = hist;
         // Remove transparent idx

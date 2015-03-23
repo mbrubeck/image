@@ -107,7 +107,7 @@ macro_rules! define_decoder_function {
 
 #[$doc]
 pub fn $name<R, W>(mut r: R, w: &mut W, min_code_size: u8) -> io::Result<()>
-where R: BitReader, W: Writer {
+where R: BitReader, W: Write {
     let mut prev = None;
     let clear_code = 1 << min_code_size as usize;
     let end_code = clear_code + 1;
