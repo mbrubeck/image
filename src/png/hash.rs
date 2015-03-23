@@ -5,6 +5,8 @@
 //!
 //! *http://en.wikipedia.org/wiki/Cyclic_redundancy_check - Cyclic Redundancy Check
 
+use std::iter::IntoIterator;
+
 /// An Implementation of the Adler-32 checksum
 #[derive(Copy)]
 pub struct Adler32 {
@@ -19,8 +21,8 @@ impl Adler32 {
     }
 
     /// Update the internal hasher with the bytes from ```buf```
-    pub fn update<T: BytesContainer>(&mut self, buf: T) {
-        for &byte in buf.container_as_bytes().iter() {
+    pub fn update<T: IntoIterator<Item=u8>>(&mut self, buf: T) {
+        for &byte in buf {
             self.s1 = self.s1 + byte as u32;
             self.s2 = self.s1 + self.s2;
 
@@ -109,8 +111,8 @@ impl Crc32 {
     }
 
     /// Update the internal hasher with the bytes from ```buf```
-    pub fn update<T: BytesContainer>(&mut self, buf: T) {
-        for &byte in buf.container_as_bytes().iter() {
+    pub fn update<T: IntoIterator<Item=u8>>(&mut self, buf: T) {
+        for &byte in buf {
             let a = (self.crc ^ byte as u32) & 0xFF;
             let b = self.crc >> 8;
 
