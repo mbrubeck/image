@@ -4,6 +4,7 @@ use std::io::{
     Write
 };
 use std::fs;
+use std::path::Path;
 use std::iter;
 use std::ascii::OwnedAsciiExt;
 

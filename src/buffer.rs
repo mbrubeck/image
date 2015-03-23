@@ -5,6 +5,7 @@ use std::marker::PhantomData;
 use std::num::Int;
 use std::iter::repeat;
 use std::io;
+use std::path::Path;
 
 use traits::{ Zero, Primitive };
 use color::{ Rgb, Rgba, Luma, LumaA, FromColor, ColorType };
