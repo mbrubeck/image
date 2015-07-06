@@ -218,7 +218,7 @@ pub trait ImageDecoder: Sized {
 
 
 /// Immutable pixel iterator
-pub struct Pixels<'a, I: 'a> {
+pub struct Pixels<'a, I: 'a + ?Sized> {
     image:  &'a I,
     x:      u32,
     y:      u32,
@@ -250,7 +250,7 @@ impl<'a, I: GenericImage> Iterator for Pixels<'a, I> {
 
 /// Mutable pixel iterator
 /// DEPRECATED: It is currently not possible to create a safe iterator for this in Rust. You have to use an iterator over the image buffer instead.
-pub struct MutPixels<'a, I: 'a> {
+pub struct MutPixels<'a, I: 'a + ?Sized> {
     image:  &'a mut I,
     x:      u32,
     y:      u32,
@@ -291,7 +291,7 @@ impl<'a, I: GenericImage + 'a> Iterator for MutPixels<'a, I>
 }
 
 /// A trait for manipulating images.
-pub trait GenericImage: Sized {
+pub trait GenericImage {
     /// The type of pixel.
     type Pixel: Pixel;
 
@@ -437,7 +437,7 @@ pub trait GenericImage: Sized {
 }
 
 /// A View into another image
-pub struct SubImage <'a, I: 'a> {
+pub struct SubImage <'a, I: 'a + ?Sized> {
     image:   &'a mut I,
     xoffset: u32,
     yoffset: u32,
@@ -446,7 +446,7 @@ pub struct SubImage <'a, I: 'a> {
 }
 
 // TODO: Do we really need the 'static bound on `I`? Can we avoid it?
-impl<'a, I: GenericImage + 'static> SubImage<'a, I>
+impl<'a, I: GenericImage + 'static + ?Sized> SubImage<'a, I>
     where I::Pixel: 'static,
           <I::Pixel as Pixel>::Subpixel: 'static {
 
@@ -491,7 +491,7 @@ impl<'a, I: GenericImage + 'static> SubImage<'a, I>
 
 #[allow(deprecated)]
 // TODO: Is the 'static bound on `I` really required? Can we avoid it?
-impl<'a, I: GenericImage + 'static> GenericImage for SubImage<'a, I>
+impl<'a, I: GenericImage + 'static + ?Sized> GenericImage for SubImage<'a, I>
     where I::Pixel: 'static,
           <I::Pixel as Pixel>::Subpixel: 'static {
 
